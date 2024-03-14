@@ -16,6 +16,8 @@ public class Program
         builder.Services.AddSingleton<BlogScrapper>();
         builder.Services.AddSingleton<BlogRepository>();
         builder.Services.AddTransient<IDbConnection, SqlConnection>(_ => new SqlConnection(connection));
+        builder.Services.AddMemoryCache();
+        builder.Services.AddHostedService<ScrapeBackgroundTask>();
 
         var app = builder.Build();
 
