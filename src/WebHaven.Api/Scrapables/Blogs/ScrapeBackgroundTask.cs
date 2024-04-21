@@ -1,7 +1,7 @@
 using System.Collections.ObjectModel; // ReadOnlyCollection
 using Microsoft.Extensions.Caching.Memory; // IMemroyCache
 
-namespace InsightsInn.Api.Scrapables.Blogs;
+namespace WebHaven.Api.Scrapables.Blogs;
 
 internal class ScrapeBackgroundTask(IServiceScopeFactory scopeFactory) : BackgroundService
 {

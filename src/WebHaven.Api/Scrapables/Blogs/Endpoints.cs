@@ -1,7 +1,7 @@
 using System.Collections.ObjectModel; // ReadOnlyCollection
 using Microsoft.Extensions.Caching.Memory; // IMemoryCache
 
-namespace InsightsInn.Api.Scrapables.Blogs;
+namespace WebHaven.Api.Scrapables.Blogs;
 
 internal static class Endpoints
 {
@@ -9,6 +9,7 @@ internal static class Endpoints
     {
         app.MapGet("api/blogs", async (BlogScrapper scrapper, BlogRepository repo, IMemoryCache cache) =>
         {
+            // TODO: Make retrieving from cache the repo responsibility
             if (cache.TryGetValue<IDictionary<string, ReadOnlyCollection<PostSummary>>>(BlogConstants.BlogsCacheKey, out var cachedResult))
                 return TypedResults.Ok(cachedResult);
 

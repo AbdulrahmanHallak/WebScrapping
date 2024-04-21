@@ -1,8 +1,8 @@
 using System.Data; // IDbConnection
-using InsightsInn.Api.Scrapables.Blogs; // BlogScrapper
+using WebHaven.Api.Scrapables.Blogs; // BlogScrapper
 using Microsoft.Data.SqlClient; // SqlConnection
 
-namespace InsightsInn.Api;
+namespace WebHaveni;
 
 public class Program
 {

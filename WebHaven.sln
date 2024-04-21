@@ -5,7 +5,7 @@ VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{83E649A3-0B40-4B1E-959B-7C1CD0EAA3AA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InsightsInn.Api", "src\InsightsInn.Api\InsightsInn.Api.csproj", "{1147627B-1843-467D-889F-C0E1B796D72F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebHaven.Api", "src\WebHaven.Api\WebHaven.Api.csproj", "{1147627B-1843-467D-889F-C0E1B796D72F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

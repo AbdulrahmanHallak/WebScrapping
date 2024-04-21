@@ -1,7 +1,7 @@
 using System.Collections.ObjectModel; // ReadOnlyCollection
 using HtmlAgilityPack; // HtmlDocument
 
-namespace InsightsInn.Api.Scrapables.Blogs;
+namespace WebHaven.Api.Scrapables.Blogs;
 
 internal class BlogScrapper
 {

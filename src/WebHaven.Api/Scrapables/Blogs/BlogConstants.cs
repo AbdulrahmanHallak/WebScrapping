@@ -1,4 +1,4 @@
-namespace InsightsInn.Api.Scrapables.Blogs;
+namespace WebHaven.Api.Scrapables.Blogs;
 
 internal static class BlogConstants
 {
