@@ -1,11 +1,11 @@
-using System.Collections.ObjectModel; // ReadOnlyCollection
+using System.Collections.Immutable; // ImmutableArray
 using HtmlAgilityPack; // HtmlDocument
 
 namespace WebHaven.Api.Scrapables.Blogs;
 
 internal class BlogScrapper
 {
-    public async Task<ReadOnlyCollection<PostSummary>> Scrape(BlogXPath blogXPath)
+    public async Task<ImmutableArray<PostSummary>> Scrape(BlogXPath blogXPath)
     {
         var client = new HtmlWeb();
         HtmlDocument doc = await client.LoadFromWebAsync(blogXPath.Uri.ToString());
@@ -29,6 +29,6 @@ internal class BlogScrapper
             postSummaries.Add(postSummary);
         }
 
-        return new ReadOnlyCollection<PostSummary>(postSummaries);
+        return ImmutableArray.Create(postSummaries.ToArray());
     }
 }

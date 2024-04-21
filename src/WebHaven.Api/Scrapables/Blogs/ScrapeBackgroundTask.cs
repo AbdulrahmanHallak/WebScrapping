@@ -1,4 +1,4 @@
-using System.Collections.ObjectModel; // ReadOnlyCollection
+using System.Collections.Immutable; // ImmutableArray
 using Microsoft.Extensions.Caching.Memory; // IMemroyCache
 
 namespace WebHaven.Api.Scrapables.Blogs;
@@ -16,12 +16,12 @@ internal class ScrapeBackgroundTask(IServiceScopeFactory scopeFactory) : Backgro
             var cache = scope.ServiceProvider.GetRequiredService<IMemoryCache>();
             var scrapper = scope.ServiceProvider.GetRequiredService<BlogScrapper>();
 
-            ReadOnlyCollection<BlogXPath> paths = await repo.GetBlogsXPath();
+            ImmutableArray<BlogXPath> paths = await repo.GetBlogsXPath();
 
-            Dictionary<string, ReadOnlyCollection<PostSummary>> result = [];
+            Dictionary<string, ImmutableArray<PostSummary>> result = [];
             foreach (var item in paths)
             {
-                ReadOnlyCollection<PostSummary> posts = await scrapper.Scrape(item);
+                ImmutableArray<PostSummary> posts = await scrapper.Scrape(item);
                 result.Add(item.Uri, posts);
             }
 

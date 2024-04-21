@@ -1,4 +1,4 @@
-using System.Collections.ObjectModel; // ReadOnlyCollection
+using System.Collections.Immutable; // ImmutableArray
 using Microsoft.Extensions.Caching.Memory; // IMemoryCache
 
 namespace WebHaven.Api.Scrapables.Blogs;
@@ -10,19 +10,19 @@ internal static class Endpoints
         app.MapGet("api/blogs", async (BlogScrapper scrapper, BlogRepository repo, IMemoryCache cache) =>
         {
             // TODO: Make retrieving from cache the repo responsibility
-            if (cache.TryGetValue<IDictionary<string, ReadOnlyCollection<PostSummary>>>(BlogConstants.BlogsCacheKey, out var cachedResult))
+            if (cache.TryGetValue<IDictionary<string, ImmutableArray<PostSummary>>>(BlogConstants.BlogsCacheKey, out var cachedResult))
                 return TypedResults.Ok(cachedResult);
 
-            ReadOnlyCollection<BlogXPath> paths = await repo.GetBlogsXPath();
+            ImmutableArray<BlogXPath> paths = await repo.GetBlogsXPath();
 
-            Dictionary<string, ReadOnlyCollection<PostSummary>> result = [];
+            Dictionary<string, ImmutableArray<PostSummary>> result = [];
             foreach (var item in paths)
             {
-                ReadOnlyCollection<PostSummary> posts = await scrapper.Scrape(item);
+                ImmutableArray<PostSummary> posts = await scrapper.Scrape(item);
                 result.Add(item.Uri, posts);
             }
 
-            return TypedResults.Ok<IDictionary<string, ReadOnlyCollection<PostSummary>>>(result);
+            return TypedResults.Ok<IDictionary<string, ImmutableArray<PostSummary>>>(result);
         });
 
         return app;
