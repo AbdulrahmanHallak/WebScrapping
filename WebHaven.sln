@@ -7,6 +7,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{83E649A3-0B4
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebHaven.Api", "src\WebHaven.Api\WebHaven.Api.csproj", "{1147627B-1843-467D-889F-C0E1B796D72F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebHaven.Telegrambot", "src\WebHaven.Telegrambot\WebHaven.Telegrambot.csproj", "{A95256A4-98D4-4ECD-85E4-EAC934C25F1F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -20,8 +22,13 @@ Global
 		{1147627B-1843-467D-889F-C0E1B796D72F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1147627B-1843-467D-889F-C0E1B796D72F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1147627B-1843-467D-889F-C0E1B796D72F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A95256A4-98D4-4ECD-85E4-EAC934C25F1F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A95256A4-98D4-4ECD-85E4-EAC934C25F1F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A95256A4-98D4-4ECD-85E4-EAC934C25F1F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A95256A4-98D4-4ECD-85E4-EAC934C25F1F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{1147627B-1843-467D-889F-C0E1B796D72F} = {83E649A3-0B40-4B1E-959B-7C1CD0EAA3AA}
+		{A95256A4-98D4-4ECD-85E4-EAC934C25F1F} = {83E649A3-0B40-4B1E-959B-7C1CD0EAA3AA}
 	EndGlobalSection
 EndGlobal
