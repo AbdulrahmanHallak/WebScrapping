@@ -10,7 +10,8 @@ internal class ScrapeBackgroundTask(IServiceScopeFactory scopeFactory) : Backgro
         while (!stoppingToken.IsCancellationRequested)
         {
             using IServiceScope scope = scopeFactory.CreateScope();
-            var logger = scope.ServiceProvider.GetRequiredKeyedService<Logger<ScrapeBackgroundTask>>(typeof(Logger<ScrapeBackgroundTask>));
+            var loggerFactory = scope.ServiceProvider.GetRequiredService<ILoggerFactory>();
+            var logger = loggerFactory.CreateLogger<ScrapeBackgroundTask>();
             logger.LogInformation("Scraping websites");
 
             var repo = scope.ServiceProvider.GetRequiredService<BlogRepository>();
