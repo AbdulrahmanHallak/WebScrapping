@@ -2,7 +2,7 @@ using System.Data; // IDbConnection
 using WebHaven.Api.Scrapables.Blogs; // BlogScrapper
 using Microsoft.Data.SqlClient; // SqlConnection
 
-namespace WebHaveni;
+namespace WebHaven.Api;
 
 public class Program
 {
