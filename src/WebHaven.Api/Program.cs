@@ -8,7 +8,7 @@ public class Program
     {
         var builder = WebApplication.CreateBuilder(args);
 
-        string connection = new ConnectionString(builder.Configuration.GetConnectionString("SqlServerConnection") ??
+        var connection = new ConnectionString(builder.Configuration.GetConnectionString("SqlServerConnection") ??
                             throw new InvalidOperationException("Connection string cannot be null"));
         builder.Services.AddSingleton<ConnectionString>(_ => connection);
         builder.Services.AddSingleton<BlogScrapper>();
