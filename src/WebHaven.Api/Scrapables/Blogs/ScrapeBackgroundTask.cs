@@ -1,5 +1,5 @@
 using System.Collections.Immutable; // ImmutableArray
-using Microsoft.Extensions.Caching.Memory; // IMemroyCache
+using Microsoft.Extensions.Caching.Memory; // IMemoryCache
 
 namespace WebHaven.Api.Scrapables.Blogs;
 
@@ -19,13 +19,11 @@ internal class ScrapeBackgroundTask(IServiceScopeFactory scopeFactory) : Backgro
             var scrapper = scope.ServiceProvider.GetRequiredService<BlogScrapper>();
 
             ImmutableArray<BlogXPath> paths = await repo.GetBlogsXPath();
+            var scrapeTasks = paths.Select(path => new { path.Uri, Task = scrapper.Scrape(path) }).ToArray();
+            await Task.WhenAll(scrapeTasks.Select(x => x.Task));
 
-            var tasks = from path in paths
-                        select scrapper.Scrape(path);
-            var result = await Task.WhenAll(tasks);
-
-            cache.CreateEntry(BlogConstants.BlogsCacheKey).AbsoluteExpirationRelativeToNow = TimeSpan.FromDays(1);
-            cache.Set(BlogConstants.BlogsCacheKey, result);
+            foreach (var item in scrapeTasks)
+                cache.Set(item.Uri, await item.Task);
 
             logger.LogInformation("Added blogs to cache");
             await Task.Delay(TimeSpan.FromDays(1), stoppingToken);

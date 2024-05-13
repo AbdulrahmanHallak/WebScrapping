@@ -1,4 +1,5 @@
 using System.Collections.Immutable; // ImmutableArray
+using Microsoft.AspNetCore.Mvc; // FromQuery
 using Microsoft.Extensions.Caching.Memory; // IMemoryCache
 
 namespace WebHaven.Api.Scrapables.Blogs;
@@ -7,23 +8,34 @@ internal static class Endpoints
 {
     public static WebApplication MapBlogEndpoints(this WebApplication app)
     {
-        app.MapGet("api/blogs", async (BlogScrapper scrapper, BlogRepository repo, IMemoryCache cache) =>
+        app.MapGet("api/blogs", async ([FromQuery] string? id, BlogScrapper scrapper, BlogRepository repo, IMemoryCache cache) =>
         {
-            // TODO: Make retrieving from cache the repo responsibility
-            if (cache.TryGetValue<IDictionary<string, ImmutableArray<PostSummary>>>(BlogConstants.BlogsCacheKey, out var cachedResult))
+            if (id is null)
+                return Results.BadRequest();
+            if (cache.TryGetValue<ImmutableArray<PostSummary>>(id, out var cachedResult))
                 return TypedResults.Ok(cachedResult);
 
-            ImmutableArray<BlogXPath> paths = await repo.GetBlogsXPath();
+            var path = await repo.GetBlogXPath(id);
+            if (path is null)
+                return Results.BadRequest();
+            var result = await scrapper.Scrape(path);
 
-            Dictionary<string, ImmutableArray<PostSummary>> result = [];
-            foreach (var item in paths)
-            {
-                ImmutableArray<PostSummary> posts = await scrapper.Scrape(item);
-                result.Add(item.Uri, posts);
-            }
-
-            return TypedResults.Ok<IDictionary<string, ImmutableArray<PostSummary>>>(result);
+            return TypedResults.Ok(cachedResult);
         });
+
+        // app.MapGet("api/blogs", async ([FromQuery] string id, BlogScrapper scrapper, BlogRepository repo, IMemoryCache cache) =>
+        // {
+        //     if (cache.TryGetValue<IDictionary<string, ImmutableArray<PostSummary>>>(id, out var cachedResult))
+        //         return TypedResults.Ok(cachedResult);
+
+        //     var path = await repo.GetBlogXPath(id);
+        //     if (path is null)
+        //         return Results.BadRequest();
+
+        //     var posts = await scrapper.Scrape(path);
+
+        //     return TypedResults.Ok(posts);
+        // });
 
         return app;
     }
