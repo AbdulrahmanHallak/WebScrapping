@@ -20,7 +20,7 @@ internal static class Endpoints
                 return Results.BadRequest();
             var result = await scrapper.Scrape(path);
 
-            return TypedResults.Ok(cachedResult);
+            return TypedResults.Ok(result);
         });
 
         // app.MapGet("api/blogs", async ([FromQuery] string id, BlogScrapper scrapper, BlogRepository repo, IMemoryCache cache) =>

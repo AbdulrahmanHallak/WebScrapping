@@ -18,7 +18,7 @@ internal class BlogRepository(ConnectionString connString)
     {
         var query = "SELECT * FROM BlogsXPath WHERE Uri = @id";
         using var connection = new SqlConnection(connString);
-        BlogXPath? result = await connection.QueryFirstOrDefaultAsync<BlogXPath>(query, id);
+        BlogXPath? result = await connection.QueryFirstOrDefaultAsync<BlogXPath>(query, new { id });
 
         return result;
     }
